@@ -111,10 +111,7 @@ export default {
         },
         customRender: {
             type: Function,
-            default: (row, column) => {
-                this.$toastr.warning(`'Custom render function is missing for column: ${column.name}'`);
-                return row[column.name];
-            },
+            default: (row, column) => row[column.name],
         },
         i18n: {
             type: Function,
@@ -334,6 +331,7 @@ export default {
 
                 if (status === 555) {
                     this.$toastr.error(data.message);
+                    return;
                 }
 
                 this.handleError(error);
@@ -345,7 +343,7 @@ export default {
                 columns: this.template.columns,
                 meta: {
                     start: 0,
-                    length: this.body.count,
+                    length: this.body.filtered,
                     sort: this.template.sort,
                     enum: this.template.enum,
                     date: this.template.date,
